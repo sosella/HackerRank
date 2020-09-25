@@ -4237,6 +4237,95 @@
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+    class Program
+    {
+        private static readonly SinglyLinkedListNode visitedNode = new SinglyLinkedListNode(0);
+
+        private class SinglyLinkedListNode
+        {
+            public int data { get; private set; }
+            public SinglyLinkedListNode next { get; set; }
+
+            public SinglyLinkedListNode(int nodeData)
+            {
+                this.data = nodeData;
+                this.next = null;
+            }
+        }
+
+        private class SinglyLinkedList
+        {
+            public SinglyLinkedListNode head { get; private set; }
+            public SinglyLinkedListNode tail { get; private set; }
+
+            public SinglyLinkedList()
+            {
+                head = null;
+                tail = null;
+            }
+
+            public SinglyLinkedListNode InsertNode(int nodeData)
+            {
+                SinglyLinkedListNode node = new SinglyLinkedListNode(nodeData);
+
+                if (head == null)
+                {
+                    head = node;
+                }
+                else
+                {
+                    tail.next = node;
+                }
+
+                tail = node;
+
+                return node;
+            }
+        }
+
+        static private bool hasCycle(SinglyLinkedListNode head)
+        {
+            if (head == null)
+            {
+                return false;
+            }
+            SinglyLinkedListNode node = head;
+            for(; ; )
+            {
+                if (node.next == visitedNode)
+                {
+                    return true;
+                }
+                if (node.next == null)
+                {
+                    return false;
+                }
+                SinglyLinkedListNode next = node.next;
+                node.next = visitedNode;
+                node = next;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            SinglyLinkedList ex1 = new SinglyLinkedList();
+            SinglyLinkedListNode node1_1 = ex1.InsertNode(1);
+            Console.WriteLine(hasCycle(ex1.head) ? 1 : 0);
+
+            SinglyLinkedList ex2 = new SinglyLinkedList();
+            SinglyLinkedListNode node2_1 = ex2.InsertNode(1);
+            SinglyLinkedListNode node2_2 = ex2.InsertNode(2);
+            SinglyLinkedListNode node2_3 = ex2.InsertNode(3);
+            node2_3.next = node2_2;
+            Console.WriteLine(hasCycle(ex2.head) ? 1 : 0);
+        }
+    }
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
