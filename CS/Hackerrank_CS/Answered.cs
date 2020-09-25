@@ -4323,9 +4323,32 @@
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+        public static string findNumber(List<int> arr, int k)
+        {
+            foreach (int n in arr)
+            {
+                if (n == k)
+                {
+                    return "YES";
+                }
+            }
+            return "NO";
+        }
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+        public static List<int> oddNumbers(int l, int r)
+        {
+            List<int> oddNbrs = new List<int>();
+            for (int n = l; n <= r; n++)
+            {
+                if ((n % 2) == 1)
+                {
+                    oddNbrs.Add(n);
+                }
+            }
+            return oddNbrs;
+        }
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
