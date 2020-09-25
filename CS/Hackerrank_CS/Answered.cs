@@ -4200,6 +4200,40 @@
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+        /*
+         * Complete the 'rotateLeft' function below.
+         *
+         * The function is expected to return an INTEGER_ARRAY.
+         * The function accepts following parameters:
+         *  1. INTEGER d
+         *  2. INTEGER_ARRAY arr
+         */
+        public static List<int> rotateLeft(int d, List<int> arr)
+        {
+            int N = arr.Count;
+            int[] rotatedArr = new int[arr.Count];
+
+            int i = 0;
+            foreach (int n in arr)
+            {
+                int j = i - d;
+                if (j < 0)
+                {
+                    j += N;
+                }
+                rotatedArr[j] = n;
+                i++;
+            }
+
+            return rotatedArr.ToList<int>();
+        }
+
+        static void Main(string[] args)
+        {
+            List<int> result = rotateLeft(4, new int[] { 1, 2, 3, 4, 5 }.ToList());
+
+            Console.WriteLine(string.Join(" ", result));
+        }
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
