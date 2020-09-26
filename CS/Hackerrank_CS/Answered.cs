@@ -4352,4 +4352,79 @@
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+        public static string compressedString(string message)
+        {
+            int msgLen = message.Length;
+
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            while (i < msgLen)
+            {
+                int count = 1;
+                char ch = message[i];
+                sb.Append(ch);
+                i++;
+
+                while ((i < msgLen) && (message[i] == ch))
+                {
+                    count++;
+                    i++;
+                }
+
+                if (count > 1)
+                {
+                    sb.Append(count);
+                }
+            }
+
+            return sb.ToString();
+        }
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
+        public static int maxTrailing(List<int> levels)
+        {
+            int nbrLevels = levels.Count;
+
+            int maxLevel = levels[0];
+            int maxLevelIdx = 0;
+            for (int n = 1; n < nbrLevels; n++)
+            {
+                int leveln = levels[n];
+                if (leveln > maxLevel)
+                {
+                    maxLevel = leveln;
+                    maxLevelIdx = n;
+                }
+            }
+
+            if (maxLevelIdx == 0)
+            {
+                return -1;
+            }
+
+            int minLevel = levels[maxLevelIdx - 1];
+            for (int n = maxLevelIdx - 2; n >= 0; n--)
+            {
+                int leveln = levels[n];
+                if (leveln < minLevel)
+                {
+                    minLevel = leveln;
+                }
+            }
+
+            return maxLevel - minLevel;
+        }
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
+#endif
+// ---------------------------------------------------------------------------------------------------------
+#if false
 #endif
