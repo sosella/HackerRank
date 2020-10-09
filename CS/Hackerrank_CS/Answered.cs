@@ -4549,6 +4549,94 @@
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
+    class Program
+    {
+        static void Drop(char[][] matrix)
+        {
+            int N = matrix.Length;
+            int Nm1 = N - 1;
+
+            for (int j = 0; j < N; )
+            {
+                bool dropped = false;
+                for (int i = Nm1; i > 0; i--)
+                {
+                    if ((matrix[i][j] == ' ') && (matrix[i - 1][j] != ' '))
+                    {
+                        matrix[i][j] = matrix[i - 1][j];
+                        matrix[i - 1][j] = ' ';
+                        dropped = true;
+                    }
+                }
+                if (!dropped)
+                {
+                    j++;
+                }
+            }
+        }
+
+        static void WriteMatrix(char[][] matrix)
+        {
+            int N = matrix.Length;
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    Console.Write($"{matrix[i][j]} ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("-------------");
+        }
+
+        static void Pop(int i, int j, char[][] matrix, bool topLevel = false)
+        {
+            int N = matrix.Length;
+            if ((i < 0) || (i >= N) || (j < 0) || (j >= N))
+            {
+                return;
+            }
+
+            char ch = matrix[i][j];
+            matrix[i][j] = ' ';
+
+            int Nm1 = N - 1;
+            if ((i > 0) && (matrix[i - 1][j] == ch))
+            {
+                Pop(i - 1, j, matrix);
+            }
+            if ((i < Nm1) && (matrix[i + 1][j] == ch))
+            {
+                Pop(i + 1, j, matrix);
+            }
+            if ((j > 0) && (matrix[i][j - 1] == ch))
+            {
+                Pop(i, j - 1, matrix);
+            }
+            if ((j < Nm1) && (matrix[i][j + 1] == ch))
+            {
+                Pop(i, j + 1, matrix);
+            }
+
+            if (topLevel)
+            {
+                Drop(matrix);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            char[][] matrix = new char[3][];
+            matrix[0] = new char[] { 'B', 'R', 'R' };
+            matrix[1] = new char[] { 'B', 'G', 'B' };
+            matrix[2] = new char[] { 'B', 'B', 'B' };
+
+            WriteMatrix(matrix);
+            Pop(0, 0, matrix, true);
+            WriteMatrix(matrix);
+        }
+    }
 #endif
 // ---------------------------------------------------------------------------------------------------------
 #if false
