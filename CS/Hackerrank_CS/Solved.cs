@@ -1,4 +1,114 @@
 ﻿// ---------------------------------------------------------------------------------------------------------
+// Append and Delete
+// ---------------------------------------------------------------------------------------------------------
+#if false
+using System;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        // s & t are strings of lowercase English letters
+        // You can perform two types of operations on the first string:
+        // 1) Append a lowercase English letter to the end of the string
+        // 2) Delete the last character of the string. Performing this operation on an empty string results in an empty string
+        // Given an integer, k, and two strings, s and t,
+        // determine whether or not you can convert s to t by performing EXACTLY k of the above operations on s.
+        // If it's possible, print Yes. Otherwise, print No.
+        public static string appendAndDelete(string s, string t, int k)
+        {
+            int sLen = s.Length;
+            int tLen = t.Length;
+
+            // Find how many of the first characters in s match those in t
+            int i = 0;
+            while (i < sLen && i < tLen)
+            {
+                if (s[i] != t[i])
+                {
+                    break;
+                }
+                i++;
+            }
+
+            // calculate how many delete ops need to be performed
+            int n = sLen - i;
+
+            // calculate how many add ops need to be performed
+            int m = tLen - i;
+
+            // calculate minimum number of operations to be performed
+            int sum = n + m;
+
+            // Calculate number of remaining ops to perform
+            int l = k - sum;
+
+            // Otherwise, can delete and add (2 ops each time) until all chars in s are deleted, or no ops left
+            while (i > 0 && l >= 2)
+            {
+                i--;
+                l -= 2;
+            }
+
+            // If not enough ops available
+            if (l < 0)
+            {
+                return "No";
+            }
+
+            // If exactly the right number of ops are available
+            if (l == 0)
+            {
+                return "Yes";
+            }
+
+            // l > 0 : i.e., some ops left, can only be handled if s is empty
+            return (i == 0) ? "Yes" : "No";
+        }
+
+        public class TestCase
+        {
+            public string s { get; }
+            public string t { get; }
+            public int k { get; }
+            public string expected { get;}
+
+            public TestCase(string s, string t, int k, string expected)
+            {
+                this.s = s;
+                this.t = t;
+                this.k = k;
+                this.expected = expected;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase("abc", "def", 6, "Yes"),
+                new TestCase("abc", "abc", 0, "Yes"),
+                new TestCase("abdef", "abcef", 6, "Yes"),
+                new TestCase("hackerhappy", "hackerrank", 9, "Yes"),
+                new TestCase("aba", "aba", 7, "Yes"),
+                new TestCase("aaaaaaaaaa", "aaaaa", 7, "Yes"),
+                new TestCase("ashley", "ash", 2, "No"),
+                new TestCase("y", "yu", 2, "No"),
+                new TestCase("abcd", "abcdert", 10, "No"),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                string result = appendAndDelete(testCase.s, testCase.t, testCase.k);
+
+                Console.WriteLine(result == testCase.expected ? "Success" : $"Failed: '{testCase.s}' '{testCase.t}' '{testCase.k}' '{testCase.expected}' ");
+            }
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Simple Array Sum
 // ---------------------------------------------------------------------------------------------------------
 #if false
@@ -4637,10 +4747,4 @@
             WriteMatrix(matrix);
         }
     }
-#endif
-// ---------------------------------------------------------------------------------------------------------
-#if false
-#endif
-// ---------------------------------------------------------------------------------------------------------
-#if false
 #endif
