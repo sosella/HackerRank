@@ -1,4 +1,157 @@
 ﻿// ---------------------------------------------------------------------------------------------------------
+// Template
+// ---------------------------------------------------------------------------------------------------------
+#if false
+using System;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            public int prop { get; }
+            public int expected { get; }
+
+            public TestCase(int prop, int expected)
+            {
+                this.prop = prop;
+                this.expected = expected;
+            }
+
+            public static int func(int prop)
+            {
+                return 0;
+            }
+
+            public void Execute()
+            {
+                Validate(func(prop));
+            }
+
+            private void Validate(int result)
+            {
+                Console.WriteLine(result == expected ? "Success" : $"Failed: '{prop}' '{expected}' != '{result}'");
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(0, 0),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
+// Library Fine
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    
+    create a program that calculates the fine (if any). The fee structure is as follows:
+    If the book is returned on or before the expected return date, no fine will be charged (i.e.: fine = 0).
+    If the book is returned after the expected return day but still within the same calendar month and year as the expected return date, fine = 15 Hackos x (the number of days late).
+    If the book is returned after the expected return month but still within the same calendar year as the expected return date, the fine = 500 Hackos x (the number of months late).
+    If the book is returned after the calendar year in which it was expected, there is a fixed fine of 10000 Hackos.
+    Charges are based only on the least precise measure of lateness. For example, whether a book is due January 1, 2017 or December 31, 2017, 
+    if it is returned January 1, 2018, that is a year late and the fine would be 10000 Hackos.
+*/
+using System;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        // d1, m1, y1: returned date day, month and year, each an integer
+        // d2, m2, y2: due date day, month and year, each an integer
+        // return: the amount of the fine or  if there is none
+        // 1 <= d <= 31
+        // 1 <= m <= 12
+        // 1 <= y <= 3000
+        // Gregorian Calendar
+        public static int libraryFine(int d1, int m1, int y1, int d2, int m2, int y2)
+        {
+            DateTime returnedDate = new DateTime(y1, m1, d1);
+            DateTime dueDate = new DateTime(y2, m2, d2);
+
+            if (returnedDate <= dueDate)
+            {
+                return 0;
+            }
+
+            if (returnedDate.Year == dueDate.Year && returnedDate.Month == dueDate.Month)
+            {
+                return 15 * (returnedDate.Day - dueDate.Day);
+            }
+
+            if (returnedDate.Year == dueDate.Year)
+            {
+                return 500 * (returnedDate.Month - dueDate.Month);
+            }
+
+            return 10000;
+        }
+
+        public class TestCase
+        {
+            public int d1 { get; }
+            public int m1 { get; }
+            public int y1 { get; }
+            public int d2 { get; }
+            public int m2 { get; }
+            public int y2 { get; }
+            public int expected { get; }
+
+            public TestCase(int d1, int m1, int y1, int d2, int m2, int y2, int expected)
+            {
+                this.d1 = d1;
+                this.m1 = m1;
+                this.y1 = y1;
+                this.d2 = d2;
+                this.m2 = m2;
+                this.y2 = y2;
+                this.expected = expected;
+            }
+
+            public void Execute()
+            {
+                Validate(libraryFine(d1, m1, y1, d2, m2, y2));
+            }
+
+            private void Validate(int result)
+            {
+                Console.WriteLine(result == expected ? "Success" : $"Failed: '{d1}' '{m1}' '{y1}' '{d2}' '{m2}' '{y2}' '{expected}' != '{result}'");
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(9, 6, 2015, 6, 6, 2015, 45),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Append and Delete
 // ---------------------------------------------------------------------------------------------------------
 #if false
