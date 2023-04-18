@@ -10,8 +10,8 @@ namespace Hackerrank
     {
         public class TestCase
         {
-            public int prop { get; }
-            public int expected { get; }
+            private int prop { get; }
+            private int expected { get; }
 
             public TestCase(int prop, int expected)
             {
@@ -19,19 +19,25 @@ namespace Hackerrank
                 this.expected = expected;
             }
 
-            public static int func(int prop)
+            public static int func(int param)
             {
                 return 0;
             }
 
             public void Execute()
             {
-                Validate(func(prop));
+                var result = func(prop);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
             }
 
-            private void Validate(int result)
+            private bool Validate(int result)
             {
-                Console.WriteLine(result == expected ? "Success" : $"Failed: '{prop}' '{expected}' != '{result}'");
+                return result == expected;
+            }
+
+            private string Title(int result)
+            {
+                return "";
             }
         }
 
@@ -40,6 +46,110 @@ namespace Hackerrank
             TestCase[] testCases = new[]
             {
                 new TestCase(0, 0),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
+// ACM ICPC Team
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    There are a number of people who will be attending ACM-ICPC World Finals.
+    Each of them may be well versed in a number of topics.
+    Given a list of topics known by each attendee, presented as binary strings, determine the maximum number of topics a 2-person team can know.
+    Each subject has a column in the binary string, and a '1' means the subject is known while '0' means it is not.
+    Also determine the number of teams that know the maximum number of topics.
+    Return an integer array with two elements:
+        The first is the maximum number of topics known, and 
+        the second is the number of teams that know that number of topics.
+*/
+using System;
+using System.Collections.Generic;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private List<string> topic { get; }
+            private List<int> expected { get; }
+
+            public TestCase(List<string> topic, List<int> expected)
+            {
+                this.topic = topic;
+                this.expected = expected;
+            }
+
+            public static List<int> func(List<string> topic)
+            {
+                int n = topic.Count;
+                int m = topic[0].Length;
+
+                int nbrGroupsWithMaxTopics = 0;
+                int maxTopics = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    string topics1 = topic[i];
+
+                    for (int j = i + 1; j < n; j++)
+                    {
+                        string topics2 = topic[j];
+
+                        int nbrTopics = 0;
+                        for (int k = 0; k < m; k++)
+                        {
+                            nbrTopics += ((topics1[k] == '1' || topics2[k] == '1') ? 1 : 0);
+                        }
+
+                        if (nbrTopics == maxTopics)
+                        {
+                            nbrGroupsWithMaxTopics++;
+                        }
+                        else if (nbrTopics > maxTopics)
+                        {
+                            maxTopics = nbrTopics;
+                            nbrGroupsWithMaxTopics = 1;
+                        }
+                    }
+                }
+
+                return new List<int>() { maxTopics, nbrGroupsWithMaxTopics };
+            }
+
+            public void Execute()
+            {
+                var result = func(topic);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+            }
+
+            private bool Validate(List<int> result)
+            {
+                return result[0] == expected[0] && result[1] == expected[1];
+            }
+
+            private string Title(List<int> result)
+            {
+                return $"{string.Join(',', topic)} : {string.Join(',', expected)} : {string.Join(',', result)}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(new List<string> { "10101", "11110", "00010" }, new List<int> { 5, 1 }),
+                new TestCase(new List<string> { "10101", "11100", "11010", "00101" }, new List<int> { 5, 2 }),
             };
 
             foreach (var testCase in testCases)

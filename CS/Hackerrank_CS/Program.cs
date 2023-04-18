@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ---------------------------------------------------------------------------------------------------------
+// Template
+// ---------------------------------------------------------------------------------------------------------
+#if true
+using System;
 
 namespace Hackerrank
 {
@@ -6,8 +10,8 @@ namespace Hackerrank
     {
         public class TestCase
         {
-            public int prop { get; }
-            public int expected { get; }
+            private int prop { get; }
+            private int expected { get; }
 
             public TestCase(int prop, int expected)
             {
@@ -15,19 +19,25 @@ namespace Hackerrank
                 this.expected = expected;
             }
 
-            public static int func(int prop)
+            public static int func(int param)
             {
                 return 0;
             }
 
             public void Execute()
             {
-                Validate(func(prop));
+                var result = func(prop);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
             }
 
-            private void Validate(int result)
+            private bool Validate(int result)
             {
-                Console.WriteLine(result == expected ? "Success" : $"Failed: '{prop}' '{expected}' != '{result}'");
+                return result == expected;
+            }
+
+            private string Title(int result)
+            {
+                return "";
             }
         }
 
@@ -47,3 +57,4 @@ namespace Hackerrank
         }
     }
 }
+#endif
