@@ -59,6 +59,107 @@ namespace Hackerrank
 }
 #endif
 // ---------------------------------------------------------------------------------------------------------
+// Taum and B'day
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    Taum is planning to celebrate the birthday of his friend, Diksha. 
+    There are two types of gifts that Diksha wants from Taum: one is black and the other is white. 
+    To make her happy, Taum has to buy b black gifts and w white gifts.
+    The cost of each black gift is bc units.
+    The cost of every white gift is wc units.
+    The cost to convert a black gift into white gift or vice versa is z units.
+    Determine the minimum cost of Diksha's gifts.
+*/
+using System;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private int b { get; }
+            private int w { get; }
+            private int bc { get; }
+            private int wc { get; }
+            private int z { get; }
+            private long expected { get; }
+
+            public TestCase(int b, int w, int bc, int wc, int z, long expected)
+            {
+                this.b = b;
+                this.w = w;
+                this.bc = bc;
+                this.wc = wc;
+                this.z = z;
+                this.expected = expected;
+            }
+
+            // int b: the number of black gifts
+            // int w: the number of white gifts
+            // int bc: the cost of a black gift
+            // int wc: the cost of a white gift
+            // int z: the cost to convert one color gift to the other color
+            // returns the minimum cost to purchase the gifts
+            public static long func(int b, int w, int bc, int wc, int z)
+            {
+                long bcz = wc + (long)z;
+                long wcz = bc + (long)z;
+
+                return (b * ((bc <= bcz) ? bc : bcz)) + (w * ((wc <= wcz) ? wc : wcz));
+            }
+
+            public void Execute()
+            {
+                var result = func(b, w, bc, wc, z);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+            }
+
+            private bool Validate(long result)
+            {
+                return result == expected;
+            }
+
+            private string Title(long result)
+            {
+                return $"{b} {w} {bc} {wc} {z} : {expected} : {result}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(3, 5, 3, 4, 1, 29),
+                new TestCase(10, 10, 1, 1, 1, 20),
+                new TestCase(5, 9, 2, 3, 4, 37),
+                new TestCase(3, 6, 9, 1, 1, 12),
+                new TestCase(7, 7, 4, 2, 1, 35),
+                new TestCase(3, 3, 1, 9, 2, 12),
+                new TestCase(42899452, 58539299, 832193, 584380, 655132, 69909819207856),
+                new TestCase(60020263, 12506083, 825605, 399222, 7272, 29390580255348),
+                new TestCase(19034680, 45658385, 284898, 669792, 173627, 26358453244765),
+                new TestCase(801547, 74747239, 505041, 84296, 26457, 6389666993635),
+                new TestCase(79436075, 94544581, 359505, 563489, 368187, 81832497545984),
+                new TestCase(71415433, 84421474, 700577, 634364, 199434, 103585953737377),
+                new TestCase(16681661, 41050167, 738732, 513853, 150899, 32182918976523),
+                new TestCase(86393864, 80050468, 656981, 735820, 449689, 115661862528344),
+                new TestCase(64664252, 20286852, 624425, 949149, 956643, 59633220844048),
+                new TestCase(5314404, 95267047, 703881, 819444, 351342, 81806718063792),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Modified Kaprekar Numbers
 // ---------------------------------------------------------------------------------------------------------
 #if false
