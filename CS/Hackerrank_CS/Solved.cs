@@ -62,6 +62,107 @@ namespace Hackerrank
 }
 #endif
 // ---------------------------------------------------------------------------------------------------------
+// Chocolate Feast
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    He has 15 to spend, bars cost 3, and he can turn in 2 wrappers to receive another bar.
+    Initially, he buys 5 bars and has 5 wrappers after eating them.
+    He turns in 4 of them, leaving him with 1 wrapper, for 2 more bars.
+    After eating those 2 bars, he has 3 wrappers, turns in 2 leaving him with 1 wrapper and his new bar.
+    Once he eats that 1 bar, he has 2 wrappers, and turns them in for another bar.
+    After eating that 1 bar, he only has 1 wrapper, and his feast ends.
+    Overall, he has eaten 5 + 2 + 1 + 1 = 9 bars.
+*/
+using System;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private int n { get; }
+            private int c { get; }
+            private int m { get; }
+            private int expected { get; }
+
+            public TestCase(int n, int c, int m, int expected)
+            {
+                this.n = n;
+                this.c = c;
+                this.m = m;
+                this.expected = expected;
+            }
+
+            // int n: Bobby's initial amount of money
+            // int c: the cost of a chocolate bar
+            // int m: the number of wrappers he can turn in for a free bar
+            // Returns int: the number of chocolates Bobby can eat after taking full advantage of the promotion
+            public static int func(int n, int c, int m)
+            {
+                // buys b bars
+                int b = n / c;
+
+                // eats b bars, and gets b wrappers
+                int w = b;
+
+                // If doesn't have enough wrappers for a bar, stop
+                while (w >= m)
+                {
+                    // gets nb new bars with w wrappers
+                    int nb = w / m;
+
+                    // has w wrappers remaining
+                    w %= m;
+
+                    // eats the new bars adding to total eaten
+                    b += nb;
+
+                    // Adds to the number of wrappers
+                    w += nb;
+                }
+
+                return b;
+            }
+
+            public void Execute()
+            {
+                var result = func(n, c, m);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+            }
+
+            private bool Validate(int result)
+            {
+                return result == expected;
+            }
+
+            private string Title(int result)
+            {
+                return $"{n} {c} {m} : {expected} {result}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(10, 2, 5, 6),
+                new TestCase(12, 4, 4, 3),
+                new TestCase(6, 2, 2, 5),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Manasa and Stones
 // ---------------------------------------------------------------------------------------------------------
 #if false
