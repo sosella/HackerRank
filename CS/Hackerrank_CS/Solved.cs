@@ -62,6 +62,114 @@ namespace Hackerrank
 }
 #endif
 // ---------------------------------------------------------------------------------------------------------
+// Lisa's Workbook
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    Lisa just got a new math workbook. 
+    A workbook contains exercise problems, grouped into chapters. 
+    Lisa believes a problem to be special if its index (within a chapter) is the same as the page number where it's located. 
+
+    The format of Lisa's book is as follows:
+    There are n chapters in Lisa's workbook, numbered from 1 to n.
+    The ith chapter has arr[i] problems, numbered from 1 to arr[i].
+    Each page can hold up to k problems. Only a chapter's last page of exercises may contain fewer than k problems.
+    Each new chapter starts on a new page, so a page will never contain problems from more than one chapter.
+    The page number indexing starts at 1.
+
+    Given the details for Lisa's workbook, can you count its number of special problems?
+*/
+using System;
+using System.Collections.Generic;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private int n { get; }
+            private int k { get; }
+            private List<int> arr { get; }
+            private int expected { get; }
+
+            public TestCase(int n, int k, List<int> arr, int expected)
+            {
+                this.n = n;
+                this.k = k;
+                this.arr = arr;
+                this.expected = expected;
+            }
+
+            // int n: the number of chapters
+            // int k: the maximum number of problems per page
+            // int arr[n]: the number of problems in each chapter
+            // Returns int: the number of special problems in the workbook
+            public static int func(int n, int k, List<int> arr)
+            {
+                int sp = 0;
+                int p = 1;
+
+                for (int i = 0; i < n; i++)
+                {
+                    // Calculate the # pages for this chapter = # problems in chapter / # problems per page
+                    int cp = (arr[i] / k) + ((arr[i] % k) == 0 ? 0 : 1);
+                    int pmin = 1;
+                    int pmax = k;
+                    for (int j = 1; j <= cp; j++)
+                    {
+                        if (pmax > arr[i])
+                        {
+                            pmax = arr[i];
+                        }
+                        if ((p >= pmin) && (p <= pmax))
+                        {
+                            sp++;
+                        }
+                        pmin = pmax + 1;
+                        pmax += k;
+                        p++;
+                    }
+                }
+
+                return sp;
+            }
+
+            public void Execute()
+            {
+                var result = func(n, k, arr);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+            }
+
+            private bool Validate(int result)
+            {
+                return result == expected;
+            }
+
+            private string Title(int result)
+            {
+                return $"{n} {k} {string.Join(',', arr)} : {expected} : {result}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(5, 3, new List<int>() { 4, 2, 6, 1, 10 }, 4),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Chocolate Feast
 // ---------------------------------------------------------------------------------------------------------
 #if false
