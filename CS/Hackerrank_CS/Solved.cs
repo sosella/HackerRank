@@ -59,6 +59,120 @@ namespace Hackerrank
 }
 #endif
 // ---------------------------------------------------------------------------------------------------------
+// Modified Kaprekar Numbers
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    A modified Kaprekar number is a positive whole number with a special property. 
+    If you square it, then split the number into two integers and sum those integers, you have the same value you started with.
+    Consider a positive whole number n with d digits. 
+    We square n to arrive at a number that is either 2 x d digits long or (2 x d) - 1 digits long. 
+    Split the string representation of the square into two parts, l and r. 
+    The right hand part, r must be d digits long. 
+    The left is the remaining substring. 
+    Convert those two substrings back to integers, add them and see if you get n.
+*/
+using System;
+using System.Collections.Generic;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private int p { get; }  // the lower limit
+            private int q { get; }  // the upper limit (inclusive)
+            private string expected { get; }
+
+            public TestCase(int p, int q, string expected)
+            {
+                this.p = p;
+                this.q = q;
+                this.expected = expected;
+            }
+
+            // Given two positive integers p and q where p is lower than q,
+            // write a program to print the modified Kaprekar numbers in the range between p and q, inclusive.
+            // If no modified Kaprekar numbers exist in the given range, print "INVALID RANGE"
+            public static string func(int p, int q)
+            {
+                var modifiedKaprekarNumbers = new List<int>();
+
+                while (p <= q)
+                {
+                    string pStr = p.ToString();
+                    int d = pStr.Length;
+
+                    long p2 = p * (long)p;
+                    string p2Str = p2.ToString();
+                    int d2 = p2Str.Length;
+
+                    int lLen = d2 - d;
+                    int rLen = d;
+
+                    string l = p2Str.Substring(0, lLen);
+                    string r = p2Str.Substring(lLen, rLen);
+
+                    int lNum = l.Length == 0 ? 0 : int.Parse(l);
+                    int rNum = int.Parse(r);
+
+                    if ((lNum + rNum) == p)
+                    {
+                        modifiedKaprekarNumbers.Add(p);
+                    }
+
+                    p++;
+                }
+
+                var result = (modifiedKaprekarNumbers.Count == 0) ? "INVALID RANGE" : string.Join(' ', modifiedKaprekarNumbers);
+
+                Console.WriteLine($"{result}");
+
+                return result;
+            }
+
+            public void Execute()
+            {
+#if false
+                func(p, q);
+#else
+                var result = func(p, q);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+#endif
+            }
+
+            private bool Validate(string result)
+            {
+                return result == expected;
+            }
+
+            private string Title(string result)
+            {
+                return $"{p} {q} : {expected} : {result}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(1, 100, "1 9 45 55 99"),
+                new TestCase(100, 300, "297"),
+                new TestCase(1, 99999, "1 9 45 55 99 297 703 999 2223 2728 4950 5050 7272 7777 9999 17344 22222 77778 82656 95121 99999"),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // ACM ICPC Team
 // ---------------------------------------------------------------------------------------------------------
 #if false
