@@ -62,6 +62,75 @@ namespace Hackerrank
 }
 #endif
 // ---------------------------------------------------------------------------------------------------------
+// Intro to Tutorial Challenges
+// ---------------------------------------------------------------------------------------------------------
+#if false
+/*
+    Given a sorted array (arr) and a number (V), can you print the index location of V in the array?
+*/
+using System;
+using System.Collections.Generic;
+
+namespace Hackerrank
+{
+    class Program
+    {
+        public class TestCase
+        {
+            private int V { get; }
+            private List<int> arr { get; }
+            private int expected { get; }
+
+            public TestCase(int V, List<int> arr, int expected)
+            {
+                this.V = V;
+                this.arr = arr;
+                this.expected = expected;
+            }
+
+            // int V: an integer to search for
+            // int arr[n]: a sorted array of integers
+            // Returns int: the index of V in arr
+            public static int func(int V, List<int> arr)
+            {
+                return arr.IndexOf(V);
+            }
+
+            public void Execute()
+            {
+                var result = func(V, arr);
+                Console.WriteLine($"{Title(result)} -> " + (Validate(result) ? "Success" : "Failed"));
+            }
+
+            private bool Validate(int result)
+            {
+                return result == expected;
+            }
+
+            private string Title(int result)
+            {
+                return $"{V} {string.Join(',', arr)} : {expected} : {result}";
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestCase[] testCases = new[]
+            {
+                new TestCase(4, new List<int>() { 1, 4, 5, 7, 9, 12 }, 1),
+            };
+
+            foreach (var testCase in testCases)
+            {
+                testCase.Execute();
+            }
+
+            Console.ReadLine();
+        }
+    }
+}
+#endif
+// ---------------------------------------------------------------------------------------------------------
 // Lisa's Workbook
 // ---------------------------------------------------------------------------------------------------------
 #if false
